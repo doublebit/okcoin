@@ -1,2 +1,2 @@
-# okcoin
-PHP wrapper for OkCoin API
+# doublebit/okcoin
+Laravel wrapper for OKCoin API.
