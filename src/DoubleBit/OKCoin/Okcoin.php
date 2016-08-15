@@ -21,7 +21,14 @@ class Okcoin
         $signature = $this->sign($arguments[0], $arguments[1]);
         $query = http_build_query($arguments[0]);
         $query .= '&sign=' . $signature;
-        return $this->callApi(strtoupper($method), $endpoint, $query);
+        $result = $this->callApi(strtoupper($method), $endpoint, $query);
+        if (isset($arguments[2]) && is_callable($arguments[2])) {
+            $strippedArgs = $arguments;
+            unset($strippedArgs['api_key']);
+            unset($strippedArgs['secret_key']);
+            call_user_func_array($arguments[2], [$endpoint, $strippedArgs, $result]);
+        }
+        return $result;
     }
 
     public function callApi($method, $endpoint, $query)
