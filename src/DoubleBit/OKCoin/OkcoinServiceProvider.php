@@ -25,6 +25,6 @@ class OkcoinServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('okcoin', 'Doublebit\Okcoin\Okcoin' );
+        $this->app->bind('okcoin', 'DoubleBit\OKCoin\Okcoin' );
     }
 }
