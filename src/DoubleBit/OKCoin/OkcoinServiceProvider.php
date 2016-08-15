@@ -14,7 +14,7 @@ class OkcoinServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '../config.php' => config_path('okcoin.php'),
+            __DIR__ . '/config/okcoin.php' => config_path('okcoin.php'),
         ]);
     }
 
