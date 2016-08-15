@@ -23,7 +23,7 @@ class Okcoin
         $query .= '&sign=' . $signature;
         $result = $this->callApi(strtoupper($method), $endpoint, $query);
         if (isset($arguments[2]) && is_callable($arguments[2])) {
-            $strippedArgs = $arguments;
+            $strippedArgs = $arguments[0];
             unset($strippedArgs['api_key']);
             unset($strippedArgs['secret_key']);
             call_user_func_array($arguments[2], [$endpoint, $strippedArgs, $result]);
