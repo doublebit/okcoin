@@ -1,0 +1,14 @@
+{
+    "name": "doublebit/okcoin",
+    "description" : "Laravel wrapper for OKCoin API.",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "authors": [
+        {
+            "name": "Vasile Goian",
+            "email": "opensource@doublebit.net"
+        }
+    ],
+    "minimum-stability": "stable"
+}
