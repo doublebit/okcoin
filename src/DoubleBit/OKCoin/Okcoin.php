@@ -27,7 +27,7 @@ class Okcoin
     public function callApi($method, $endpoint, $query)
     {
         $client = new \GuzzleHttp\Client();
-        $url = 'https://www.okcoin.com/api/' . Config::get('okcoin.api_version') . '/' . $endpoint . '?' . $query;
+        $url = 'https://www.okcoin.com/api/' . \Config::get('okcoin.api_version') . '/' . $endpoint . '?' . $query;
         $res = $client->request($method, $url);
         if ($res->getStatusCode() != 200) {
             return false;
