@@ -12,14 +12,14 @@ class Okcoin
         return md5($query);
     }
 
-    public function __call($name, $arguments, $secret_key)
+    public function __call($name, $arguments)
     {
         $pieces = preg_split('/(?=[A-Z])/', $name);
         $method = $pieces[0];
         unset($pieces[0]);
         $endpoint = strtolower(implode('_', $pieces)) . '.do';
-        $signature = $this->sign($arguments, $secret_key);
-        $query = http_build_query($arguments);
+        $signature = $this->sign($arguments[0], $arguments[1]);
+        $query = http_build_query($arguments[0]);
         $query .= '&sign=' . $signature;
         return $this->callApi(strtoupper($method), $endpoint, $query);
     }
