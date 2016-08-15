@@ -4,6 +4,7 @@
     "require": {
         "guzzlehttp/guzzle": "^6.2"
     },
+    "license": "MIT",
     "authors": [
         {
             "name": "Vasile Goian",
