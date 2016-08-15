@@ -14,6 +14,6 @@
         "psr-0": {
             "DoubleBit\\OKCoin": "src/"
         }
-    }
+    },
     "minimum-stability": "stable"
 }
