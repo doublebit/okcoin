@@ -5,6 +5,11 @@ namespace Doublebit\Okcoin;
 class Okcoin
 {
 
+    /**
+     * @param $params array The parameters to
+     * @param $secret_key string
+     * @return string
+     */
     public function sign($params, $secret_key)
     {
         ksort($params);
@@ -19,15 +24,26 @@ class Okcoin
         unset($pieces[0]);
         $endpoint = strtolower(implode('_', $pieces));
         
-        $api_key = $arguments[0];
-        $secret_key = $arguments[1];
-        $params = $original_params = isset($arguments[2]) ? $arguments[2] : [];
-        $callback = isset($arguments[3]) ? $arguments[3] : null;
-
-        $params['api_key'] = $api_key;
-        $signature = $this->sign($params, $secret_key);
-        $query = http_build_query($params);
-        $query .= '&sign=' . $signature;
+        if (!isset($arguments[0]) || !is_string($arguments[0])) {
+            $api_key = \Config::get('okcoin.api_key');
+            $secret_key = \Config::get('okcoin.secret_key');
+            $params = $original_params = isset($arguments[0]) ? $arguments[0] : [];
+            $callback = isset($arguments[1]) ? $arguments[1] : null;
+        } else {
+            $api_key = $arguments[0];
+            $secret_key = $arguments[1];
+            $params = $original_params = isset($arguments[2]) ? $arguments[2] : [];
+            $callback = isset($arguments[3]) ? $arguments[3] : null;
+        }
+        
+        if ($api_key && $secret_key) {
+            $params['api_key'] = $api_key;
+            $signature = $this->sign($params, $secret_key);
+            $query = http_build_query($params);
+            $query .= '&sign=' . $signature;
+        }  else {
+            $query = http_build_query($params);
+        }
         $result = $this->callApi(strtoupper($method), $endpoint, $query);
         if (is_callable($callback)) {
             call_user_func_array($callback, [$endpoint, $original_params, $result]);
