@@ -21,7 +21,7 @@ class Okcoin
         
         $api_key = $arguments[0];
         $secret_key = $arguments[1];
-        $params = $origianl_params = isset($arguments[2]) ? $arguments[2] : [];
+        $params = $original_params = isset($arguments[2]) ? $arguments[2] : [];
         $callback = isset($arguments[3]) ? $arguments[3] : null;
 
         $params['api_key'] = $api_key;
