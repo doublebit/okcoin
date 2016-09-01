@@ -14,7 +14,7 @@ class Okcoin
     {
         ksort($params);
         $query = http_build_query($params) . '&secret_key=' . $secret_key;
-        return md5($query);
+        return strtoupper(md5($query));
     }
 
     public function __call($name, $arguments)
