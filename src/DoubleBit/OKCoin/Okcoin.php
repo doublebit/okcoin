@@ -55,11 +55,15 @@ class Okcoin
     {
         $client = new \GuzzleHttp\Client();
         $url = 'https://www.okcoin.com/api/' . \Config::get('okcoin.api_version') . '/' . $endpoint . '.do?' . $query;
-        $res = $client->request($method, $url);
-        if ($res->getStatusCode() != 200) {
+        try {
+            $res = $client->request($method, $url);
+            if ($res->getStatusCode() != 200) {
+                return false;
+            }
+            return $res->getBody();
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
             return false;
         }
-        return $res->getBody();
     }
 
 }
