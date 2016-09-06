@@ -70,8 +70,8 @@ class Okcoin
                 }
             }
             return $res->getBody();
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            throw new OkcoinException(null, 888);
+        } catch (\Exception $e) {
+            throw new OkcoinException($e->getMessage(), $e->getCode());
         }
     }
 

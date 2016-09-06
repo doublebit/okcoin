@@ -101,7 +101,7 @@ class OkcoinException extends \Exception
     public function __construct($message = null, $code = 0, \Exception $previous = null) {
         if (isset($this->codes[$code])) {
             $message = $this->codes[$code];
-        } else {
+        } elseif (is_null($message)) {
             $message = 'Unknown error! Code ' . $code;
         }
         parent::__construct($message, $code, $previous);
