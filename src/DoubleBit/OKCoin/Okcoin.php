@@ -48,6 +48,7 @@ class Okcoin
         if (is_callable($callback)) {
             call_user_func_array($callback, [$endpoint, $original_params, $result]);
         }
+        $result = json_decode($result);
         return $result;
     }
 
@@ -58,7 +59,15 @@ class Okcoin
         try {
             $res = $client->request($method, $url);
             if ($res->getStatusCode() != 200) {
-                return false;
+                throw new OkcoinException(null, $res->getStatusCode());
+            }
+            $body = json_decode($res->getBody());
+            if (!isset($body->result) || $body->result == false) {
+                if (isset($body->error_code)) {
+                    throw new OkcoinException(null, $body->error_cde);
+                } else {
+                    throw new OkcoinException(null, 0);
+                }
             }
             return $res->getBody();
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
