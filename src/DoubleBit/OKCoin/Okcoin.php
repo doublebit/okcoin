@@ -62,16 +62,16 @@ class Okcoin
                 throw new OkcoinException(null, $res->getStatusCode());
             }
             $body = json_decode($res->getBody());
-            if (!isset($body->result) || $body->result == false) {
+            if (isset($body->error_code) || (isset($body->result) && $body->result == false)) {
                 if (isset($body->error_code)) {
                     throw new OkcoinException(null, $body->error_code);
                 } else {
-                    throw new OkcoinException(null, 0);
+                    throw new OkcoinException(null, 999);
                 }
             }
             return $res->getBody();
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            throw new OkcoinException(null, 0);
+            throw new OkcoinException(null, 888);
         }
     }
 

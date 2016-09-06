@@ -41,6 +41,10 @@ of parameters are moved to the third argument
 The $endpoint is the API endpoint, not the method name. The $params is an array of params (sent to the method).
 The $result is the json received from the server or `false` in case of error.
 
+## OkcoinException
+
+// @todo
+
 ## Issues
 
 Report any issues on [github](https://github.com/doublebit/okcoin/issues)
