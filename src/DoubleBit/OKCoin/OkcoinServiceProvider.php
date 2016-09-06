@@ -1,6 +1,6 @@
 <?php
 
-namespace Doublebit\Okcoin;
+namespace DoubleBit\OKCoin;
 
 use Illuminate\Support\ServiceProvider;
 

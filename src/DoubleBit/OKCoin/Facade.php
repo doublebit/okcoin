@@ -1,6 +1,6 @@
 <?php
 
-namespace DoubleBit\Okcoin;
+namespace DoubleBit\OKCoin;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 

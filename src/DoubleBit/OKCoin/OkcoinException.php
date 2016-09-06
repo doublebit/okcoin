@@ -1,8 +1,8 @@
 <?php
 
-namespace Doublebit\Okcoin;
+namespace DoubleBit\OKCoin;
 
-class OkcoinException extends \ErrorException
+class OkcoinException extends \Exception
 {
 
     protected $message = '';

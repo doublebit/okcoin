@@ -1,6 +1,6 @@
 <?php
 
-namespace Doublebit\Okcoin;
+namespace DoubleBit\OKCoin;
 
 class Okcoin
 {
@@ -64,14 +64,14 @@ class Okcoin
             $body = json_decode($res->getBody());
             if (!isset($body->result) || $body->result == false) {
                 if (isset($body->error_code)) {
-                    throw new OkcoinException(null, $body->error_cde);
+                    throw new OkcoinException(null, $body->error_code);
                 } else {
                     throw new OkcoinException(null, 0);
                 }
             }
             return $res->getBody();
         } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            return false;
+            throw new OkcoinException(null, 0);
         }
     }
 
