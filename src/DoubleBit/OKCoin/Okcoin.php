@@ -71,7 +71,15 @@ class Okcoin
             }
             return $res->getBody();
         } catch (\Exception $e) {
-            throw new OkcoinException($e->getMessage(), $e->getCode());
+            $message = $e->getMessage();
+            $code = $e->getCode();
+            if (!$message || !is_string($message)) {
+                $message = 'Invalid message';
+            }
+            if (!$code || !is_numeric($code)) {
+                $code = 888;
+            }
+            throw new OkcoinException($message, $code);
         }
     }
 
