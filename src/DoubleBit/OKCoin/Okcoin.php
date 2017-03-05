@@ -19,7 +19,7 @@ class Okcoin
 
     public function __call($name, $arguments)
     {
-        $pieces = preg_split('/(?=[A-Z])/', $name);
+        $pieces = preg_split('/(?=[A-Z0-9])/', $name);
         $method = $pieces[0];
         unset($pieces[0]);
         $endpoint = strtolower(implode('_', $pieces));
