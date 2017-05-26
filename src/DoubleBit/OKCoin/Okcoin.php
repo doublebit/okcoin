@@ -23,7 +23,7 @@ class Okcoin
         $method = $pieces[0];
         unset($pieces[0]);
         $endpoint = strtolower(implode('_', $pieces));
-        
+
         if (!isset($arguments[0]) || !is_string($arguments[0])) {
             $api_key = \Config::get('okcoin.api_key');
             $secret_key = \Config::get('okcoin.secret_key');
@@ -35,7 +35,7 @@ class Okcoin
             $params = $original_params = isset($arguments[2]) ? $arguments[2] : [];
             $callback = isset($arguments[3]) ? $arguments[3] : null;
         }
-        
+
         if ($api_key && $secret_key) {
             $params['api_key'] = $api_key;
             $signature = $this->sign($params, $secret_key);
@@ -55,7 +55,11 @@ class Okcoin
     public function callApi($method, $endpoint, $query)
     {
         $client = new \GuzzleHttp\Client();
-        $url = 'https://www.okcoin.com/api/' . \Config::get('okcoin.api_version') . '/' . $endpoint . '.do?' . $query;
+        $domain = stristr($endpoint, 'future') ?
+            \Config::get('okcoin.futures_domain') :
+            \Config::get('okcoin.domain');
+        $url = 'https://' . $domain . '/api/' . \Config::get('okcoin.api_version') .
+            '/' . $endpoint . '.do?' . $query;
         try {
             $res = $client->request($method, $url);
             if ($res->getStatusCode() != 200) {
