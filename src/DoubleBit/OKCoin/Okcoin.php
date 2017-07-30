@@ -2,8 +2,26 @@
 
 namespace DoubleBit\OKCoin;
 
+use GuzzleHttp\Client as HttpClient;
+
 class Okcoin
 {
+    /**
+     * @var HttpClient
+     */
+    protected $client;
+
+    /**
+     * @param $client HttpClient
+     * @return void
+     */
+    public function __construct(HttpClient $client = null)
+    {
+        if (is_null($client)) {
+            $client = new HttpClient();
+        }
+        $this->client = $client;
+    }
 
     /**
      * @param $params array The parameters to
@@ -17,6 +35,11 @@ class Okcoin
         return strtoupper(md5($query));
     }
 
+    /**
+     * @param  $name      string
+     * @param  $arguments array
+     * @return array
+     */
     public function __call($name, $arguments)
     {
         $pieces = preg_split('/(?=[A-Z0-9])/', $name);
@@ -52,16 +75,22 @@ class Okcoin
         return $result;
     }
 
+    /**
+     * @param  $method   string
+     * @param  $endpoint string
+     * @param  $query    string
+     * @throws           OkcoinException
+     * @return string    JSON
+     */
     public function callApi($method, $endpoint, $query)
     {
-        $client = new \GuzzleHttp\Client();
         $domain = stristr($endpoint, 'future') ?
             \Config::get('okcoin.futures_domain') :
             \Config::get('okcoin.domain');
         $url = 'https://' . $domain . '/api/' . \Config::get('okcoin.api_version') .
             '/' . $endpoint . '.do?' . $query;
         try {
-            $res = $client->request($method, $url);
+            $res = $this->client->request($method, $url);
             if ($res->getStatusCode() != 200) {
                 throw new OkcoinException(null, $res->getStatusCode());
             }
